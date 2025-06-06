@@ -51,7 +51,7 @@ To develop an AI-based web application that can assess the severity of **knee os
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/Saee-Surve/osteo-care.git
+   git clone https://github.com/komalg11/osteo-care.git
    cd osteo-care
 2. **Create a Virtual Environment**:
    ```bash
