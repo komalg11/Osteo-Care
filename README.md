@@ -1,6 +1,6 @@
 # 🦴 Knee Osteoarthritis Risk Assessment System
 
-🔗 **Live Deployment**: [https://osteo-care.onrender.com](https://osteo-care.onrender.com)
+🔗 **Live Deployment**: [https://osteo-care.onrender.com](https://osteo-care-qctw.onrender.com))
 
 ---
 
