@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Model - Osteo</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #000;
+      background-color: #f4f4f4;
+      text-align: center;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background-color: #B7A08B;
+    }
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      margin: 0;
+      color: white;
+    }
+    header nav a {
+      text-decoration: none;
+      color: #fff;
+      background-color: #154D57;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 16px;
+      margin-left: 10px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .upload-section {
+      margin: 20px auto;
+    }
+    .custom-file-upload {
+      display: inline-block;
+      background-color: #154D57;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .custom-file-upload input {
+      display: none;
+    }
+    .image-preview img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+    .predict-btn {
+      display: inline-block;
+      background-color: #154D57;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    .severity-chart {
+      position: fixed;
+      top: 100px;
+      right: 20px;
+      width: 180px;
+      background: white;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .severity-chart h3 {
+      margin-bottom: 10px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .severity-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 10px;
+    }
+    .severity-table th, .severity-table td {
+      border: 1px solid #ddd;
+      padding: 5px;
+    }
+    .severity-table th {
+      background-color: #154D57;
+      color: white;
+    }
+    .severity-table tr:nth-child(2) td { background-color: #c8e6c9; }
+    .severity-table tr:nth-child(3) td { background-color: #fff9c4; }
+    .severity-table tr:nth-child(4) td { background-color: #ffe0b2; }
+    .severity-table tr:nth-child(5) td { background-color: #ef9a9a; }
+    .severity-table tr:nth-child(6) td { background-color: #d32f2f; color: white; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Osteo-Care</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about_us">About</a>
+    </nav>
+  </header>
+  <div class="container">
+    <h2>AI Model for Knee Osteoarthritis Prediction</h2>
+    <p>Our AI-powered model analyzes knee X-ray images to predict the Kellgren-Lawrence (KL) grade, indicating the severity of osteoarthritis.</p>
+    <div class="upload-section">
+      <label class="custom-file-upload">
+        <input type="file" id="upload" accept="image/*" onchange="previewImage(event)">
+        Choose File
+      </label>
+    </div>
+    <div class="image-preview" id="imagePreview"></div>
+    <button class="predict-btn" onclick="predictSeverity()">Predict</button>
+    <div class="result-section" id="resultSection"></div>
+  </div>
+  <div class="severity-chart">
+    <h3>KL Grades & Risk Levels</h3>
+    <table class="severity-table">
+      <tr><th>KL Grade</th><th>Risk Level</th></tr>
+      <tr><td>0</td><td>Normal</td></tr>
+      <tr><td>1</td><td>Low Risk</td></tr>
+      <tr><td>2</td><td>Moderate Risk</td></tr>
+      <tr><td>3</td><td>High Risk</td></tr>
+      <tr><td>4</td><td>Severe Risk</td></tr>
+    </table>
+  </div>
+  <script>
+    function previewImage(event) {
+      const imagePreview = document.getElementById('imagePreview');
+      imagePreview.innerHTML = '';
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          imagePreview.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+    function predictSeverity() {
+      const formData = new FormData();
+      const fileInput = document.getElementById('upload');
+      if (fileInput.files.length === 0) {
+        alert("Please upload an image first.");
+        return;
+      }
+      formData.append("file", fileInput.files[0]);
+      fetch('/predict', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('resultSection').innerHTML = `<h3>Prediction: KL Grade ${data.grade}</h3><p>Risk Level: ${data.risk_level}</p>`;
+      })
+      .catch(error => console.error('Error:', error));
+    }
+  </script>
+</body>
+</html>

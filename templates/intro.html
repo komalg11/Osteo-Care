@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Osteo</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #154D57;
+        background-color: #FEFAF7;
+    }
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 40px;
+        background-color: #B7A08B;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+    header h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: 32px;
+        margin: 0;
+        color: #FEFAF7;
+    }
+    header nav a {
+        text-decoration: none;
+        color: #FEFAF7;
+        background-color: #154D57;
+        padding: 10px 20px;
+        border-radius: 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    header nav a:hover {
+        background-color: #0e3941;
+    }
+    .hero {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 40px;
+        background: linear-gradient(to right, #FEFAF7, #e5ded7);
+        animation: fadeIn 2s ease-in;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    .hero-text {
+        max-width: 50%;
+        text-align: center;
+        margin-right: 30px;
+    }
+    .hero-text h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 48px;
+        margin: 0 0 20px 0;
+        color: #154D57;
+    }
+    .hero-text p {
+        font-size: 22px;
+        margin: 0 0 20px 0;
+    }
+    .hero-text button {
+        background-color: #154D57;
+        color: #FEFAF7;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .hero-text button:hover {
+        background-color: #0e3941;
+    }
+    .hero img {
+        max-width: 200%;
+        height: auto;
+        margin-left: 250px;
+        border-radius: 10px;
+    }
+    .section-title {
+        text-align: center;
+        font-family: 'Playfair Display', serif;
+        font-size: 28px;
+        margin: 60px 0 40px 0;
+    }
+    .symptoms, .featured-content {
+        display: flex;
+        justify-content: space-around;
+        padding: 0 40px;
+        gap: 20px;
+    }
+    .symptoms img, .featured img {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 10px;
+        transition: transform 0.3s;
+    }
+    .symptoms img:hover, .featured img:hover {
+        transform: scale(1.05);
+    }
+    .footer {
+        background-color: #B7A08B;
+        padding: 40px;
+        text-align: center;
+    }
+    .footer nav a {
+        text-decoration: none;
+        color: #FEFAF7;
+        font-size: 16px;
+        margin: 0 10px;
+    }
+
+    /* Featured Section Enhancements */
+    .featured-text {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .featured-text h3 {
+        font-size: 28px;
+        font-family: 'Playfair Display', serif;
+        color: #154D57;
+    }
+    .featured-text p {
+        font-size: 18px;
+        color: #555;
+        line-height: 1.6;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    .featured-content {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 30px;
+    }
+    .featured img {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 10px;
+        transition: transform 0.3s;
+    }
+    .featured img:hover {
+        transform: scale(1.05);
+    }
+
+    /* FAQ Accordion Styles */
+    .faqs {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 0 40px;
+        margin-top: 60px;
+    }
+    .faq-question {
+        background-color: #154D57;
+        color: #FEFAF7;
+        padding: 15px;
+        font-size: 18px;
+        font-family: 'Playfair Display', serif;
+        text-align: left;
+        width: 100%;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        border-radius: 5px;
+    }
+    .faq-question:hover {
+        background-color: #0e3941;
+    }
+    .faq-answer {
+        display: none;
+        padding: 0 15px;
+        background-color: #F3F3F3;
+        font-size: 16px;
+        color: #555;
+        line-height: 1.6;
+        border-left: 3px solid #154D57;
+        border-radius: 5px;
+    }
+
+    /* Privacy Policy Styles */
+    .privacy-policy {
+        padding: 60px 40px;
+        background-color: #FEFAF7;
+        color: #154D57;
+    }
+    .privacy-policy h3 {
+        font-size: 32px;
+        font-family: 'Playfair Display', serif;
+        color: #154D57;
+    }
+    .privacy-policy p {
+        font-size: 18px;
+        line-height: 1.6;
+        color: #555;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    /* Responsive Design for Smaller Screens */
+    @media (max-width: 768px) {
+        .hero {
+            flex-direction: column;
+            text-align: center;
+        }
+        .hero-text, .hero img {
+            max-width: 100%;
+        }
+        .symptoms, .featured-content {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Osteo-Care</h1>
+    <nav>
+      <a href="#about-us">About us</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-text">
+      <h2>Knee Osteoarthritis: Early Awareness for a Better Tomorrow</h2>
+      <p>Your guide to understanding and managing knee osteoarthritis effectively.</p>
+      <a href="{{ url_for('questionnaire_option') }}">
+          <button>Use Now</button>
+      </a>
+
+    </div>
+    <img alt="Illustration of a knee joint" src="{{ url_for('static', filename='img/img2.png') }}">
+  </section>
+
+  <h2 class="section-title">Symptoms of Knee Osteoarthritis</h2>
+  <section class="symptoms">
+    <div><img alt="Knee pain" src="{{ url_for('static', filename='img/knee_pain.jpg') }}"><div>knee pain</div></div>
+    <div><img alt="Stiffness" src="{{ url_for('static', filename='img/knee_stiffness.jpg') }}"><div>Stiffness</div></div>
+    <div><img alt="Swelling" src="{{ url_for('static', filename='img/knee_Swelling.jpg') }}"><div>Swelling</div></div>
+    <div><img alt="Limited motion" src="{{ url_for('static', filename='img/motion.jpg') }}"><div>Limited Range of Motion</div></div>
+  </section>
+
+  <h2 class="section-title">Strong knees, healthier lives—empowering you against osteoarthritis</h2>
+  <section class="featured">
+    <div class="featured-text">
+      <h3>Featured</h3>
+      <p>Assess symptoms with our questionnaire and get AI-powered predictions for knee osteoarthritis management.</p>
+    </div>
+    <div class="featured-content">
+      <div><img alt="Questionnaire" src="https://storage.googleapis.com/a1aa/image/1tqe_eyEh8zwchneSduFcyLVVSYUTOGguTwElZ_zdWA.jpg"><div>Questionnaire</div></div>
+      <div><img alt="AI Model" src="https://storage.googleapis.com/a1aa/image/M0b7yilPY-Xah5PFhW7h_E-7G82LSRogpLhVk6zTrqU.jpg"><div>Prediction model</div></div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <h2 class="section-title">Frequently Asked Questions (FAQs)</h2>
+  <section class="faqs" id="faqs">
+    <div class="faq">
+      <button class="faq-question">What is Knee Osteoarthritis (OA)?</button>
+      <div class="faq-answer">
+        <p>Knee Osteoarthritis is a degenerative joint disease that affects the knee. It occurs when the protective cartilage in the knee wears down over time, leading to pain, stiffness, and swelling in the joint.</p>
+      </div>
+    </div>
+    <div class="faq">
+      <button class="faq-question">What are the common symptoms of Knee OA?</button>
+      <div class="faq-answer">
+        <p>Common symptoms include knee pain, stiffness, swelling, and limited range of motion. The symptoms can worsen over time, making movement more difficult.</p>
+      </div>
+    </div>
+    <div class="faq">
+      <button class="faq-question">How can I prevent Knee OA?</button>
+      <div class="faq-answer">
+        <p>Prevention strategies include maintaining a healthy weight, staying active with low-impact exercises, avoiding repetitive strain, and strengthening the muscles around the knee joint to reduce stress on it.</p>
+      </div>
+    </div>
+    <div class="faq">
+      <button class="faq-question">How can I manage Knee OA?</button>
+      <div class="faq-answer">
+        <p>Management of Knee OA includes physical therapy, medications to reduce pain and inflammation, lifestyle changes like weight management, and in some cases, surgical interventions like knee replacement.</p>
+      </div>
+    </div>
+    <div class="faq">
+      <button class="faq-question">Can I use your questionnaire for early detection of Knee OA?</button>
+      <div class="faq-answer">
+        <p>Yes, our questionnaire is designed to help you assess symptoms and evaluate the likelihood of knee osteoarthritis. Based on your responses, you can get AI-powered predictions for better management of your knee health.</p>
+      </div>
+    </div>
+    <div class="faq">
+      <button class="faq-question">What should I do if my AI prediction indicates a high probability of Knee OA?</button>
+      <div class="faq-answer">
+        <p>If your prediction shows a high probability of Knee OA, we recommend consulting a healthcare professional for a proper diagnosis and to discuss possible treatment options.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Privacy Policy Section -->
+  <section class="privacy-policy" id="privacy-policy">
+    <h3>Privacy Policy</h3>
+    <p>Your privacy is important to us. This privacy policy explains how we collect, use, and protect your personal information.</p>
+    <p>We collect personal information when you register on our website, use our services, or fill out our questionnaire. We use this information to provide you with tailored knee health predictions and recommendations. Your data is never shared with third parties unless required by law.</p>
+    <p>We employ industry-standard security measures to protect your information from unauthorized access, alteration, or disclosure. By using our services, you agree to the terms outlined in this privacy policy.</p>
+  </section>
+
+  <footer class="footer">
+    <h1>Osteo</h1>
+    <nav>
+      <a href="#privacy-policy">Privacy Policy</a>
+      <a href="#faqs">FAQs</a>
+      <a href="#about-us">About us</a>
+    </nav>
+  </footer>
+
+  <script>
+    document.getElementById('use-now').addEventListener('click', function() {
+      window.location.href = '/option';
+    });
+
+    // FAQ Accordion Functionality
+    document.querySelectorAll('.faq-question').forEach((button) => {
+      button.addEventListener('click', () => {
+        const answer = button.nextElementSibling;
+        const isOpen = answer.style.display === 'block';
+        
+        // Close all answers first
+        document.querySelectorAll('.faq-answer').forEach((item) => {
+          item.style.display = 'none';
+        });
+        
+        // If the clicked answer was closed, open it
+        if (!isOpen) {
+          answer.style.display = 'block';
+        }
+      
+      });
+    });
+  </script>
+  <!-- Chatbot Integration -->
+<df-messenger
+project-id="chatbot-01-450008"
+agent-id="2b6ca6e4-4bec-4d82-9836-9088a044ec9c"
+language-code="en"
+max-query-length="-1">
+<df-messenger-chat-bubble chat-title="Osteo-Care-Bot"></df-messenger-chat-bubble>
+</df-messenger>
+
+<script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+
+<style>
+df-messenger {
+  z-index: 999;
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  --df-messenger-font-color: #000;
+  --df-messenger-font-family: Google Sans;
+  --df-messenger-chat-background: #f3f6fc;
+  --df-messenger-message-user-background: #d3e3fd;
+  --df-messenger-message-bot-background: #fff;
+}
+</style>
+
+</body>
+</html>

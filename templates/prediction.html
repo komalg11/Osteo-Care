@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Model - Osteo</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #000;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background-color: #B7A08B;
+    }
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      margin: 0;
+    }
+    header nav a {
+      text-decoration: none;
+      color: #fff;
+      background-color: #154D57;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 16px;
+      margin-left: 10px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    .info {
+      background: #f7f7f7;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    .info h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+    .info p {
+      font-size: 18px;
+      line-height: 1.6;
+    }
+    .upload-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .upload-section input[type="file"] {
+      display: none;
+    }
+    .upload-section label {
+      background-color: #154D57;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 16px;
+      cursor: pointer;
+      display: inline-block;
+    }
+    .image-preview {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      margin-top: 20px;
+      flex-direction: column;
+    }
+    .image-preview img {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .buttons {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+    .buttons button {
+      background-color: #154D57;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .disclaimer {
+      background-color: #f7f7f7;
+      padding: 20px;
+      margin-top: 40px;
+      border-radius: 10px;
+      font-size: 14px;
+      line-height: 1.6;
+      text-align: center;
+    }
+    .chatbot-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      max-height: 400px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .chat-header {
+      background-color: #154D57;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+      font-weight: bold;
+    }
+    .chat-messages {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+    }
+    .chat-input {
+      display: flex;
+      border-top: 1px solid #ccc;
+    }
+    .chat-input input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      outline: none;
+    }
+    .chat-input button {
+      background-color: #154D57;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+    }
+    .severity-chart {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    width: 180px;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    }
+    .severity-chart h3 {
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    }
+    .severity-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10px;
+    }
+    .severity-table th, .severity-table td {
+    border: 1px solid #ddd;
+    padding: 5px;
+    }
+    .severity-table th {
+    background-color: #154D57;
+    color: white;
+    }
+    .severity-table tr:nth-child(2) td { background-color: #c8e6c9; }
+    .severity-table tr:nth-child(3) td { background-color: #fff9c4; }
+    .severity-table tr:nth-child(4) td { background-color: #ffe0b2; }
+    .severity-table tr:nth-child(5) td { background-color: #ef9a9a; }
+    .severity-table tr:nth-child(6) td { background-color: #d32f2f; color: white; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Osteo-Care</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about_us">About</a>
+    </nav>
+  </header>
+  <div class="container">
+    <div class="info">
+      <h2>AI Model for Knee Osteoarthritis Prediction</h2>
+      <p>
+        Our AI-powered model analyzes knee X-ray images to predict the Kellgren-Lawrence (KL) grade, 
+        which indicates the severity of osteoarthritis. This tool is designed to assist doctors in 
+        making informed decisions and is not a replacement for professional medical advice.
+      </p>
+    </div>
+
+    <div class="upload-section">
+      <label for="upload">Choose File</label>
+      <input type="file" id="upload" accept="image/*" onchange="previewImage(event)">
+
+    </div>
+
+    <div class="image-preview" id="imagePreview"></div>
+
+    <div class="disclaimer">
+      <p>
+        Disclaimer: This is an assistive tool for doctors and is not a replacement for medical advice. 
+        Patients should consult their doctor before taking any action based on the results.
+      </p>
+    </div>
+  </div>
+
+  <div class="severity-chart">
+    <h3>KL Grades & Risk Levels</h3>
+    <table class="severity-table">
+      <tr><th>KL Grade</th><th>Risk Level</th></tr>
+      <tr><td>0</td><td>Normal</td></tr>
+      <tr><td>1</td><td>Low Risk</td></tr>
+      <tr><td>2</td><td>Moderate Risk</td></tr>
+      <tr><td>3</td><td>High Risk</td></tr>
+      <tr><td>4</td><td>Severe Risk</td></tr>
+    </table>
+  </div>
+  <script>
+  function previewImage(event) {
+    const imagePreview = document.getElementById('imagePreview');
+    imagePreview.innerHTML = '';
+
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        imagePreview.appendChild(img);
+
+        const buttonsDiv = document.createElement('div');
+        buttonsDiv.classList.add('buttons');
+
+        const predictButton = document.createElement('button');
+        predictButton.textContent = 'Predict';
+        predictButton.onclick = function () {
+          const formData = new FormData();
+          formData.append('file', file);
+
+          predictButton.disabled = true; // disable to prevent multiple clicks
+          predictButton.textContent = 'Predicting...';
+
+          fetch('/prediction', {
+            method: 'POST',
+            body: formData,
+          })
+          .then(response => response.json())
+          .then(data => {
+            predictButton.style.display = 'none'; // Hide button on success
+
+            if (data.kl_grade !== undefined && data.severity_label) {
+              const severityDiv = document.createElement('div');
+              severityDiv.innerHTML = `<h3>Prediction: KL Grade ${data.kl_grade} - ${data.severity_label}</h3>`;
+              buttonsDiv.appendChild(severityDiv);
+            } else if (data.error) {
+              alert('Prediction failed: ' + data.error);
+              predictButton.disabled = false;
+              predictButton.textContent = 'Predict';
+            } else {
+              alert('Prediction failed!');
+              predictButton.disabled = false;
+              predictButton.textContent = 'Predict';
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('Error occurred during prediction.');
+            predictButton.disabled = false;
+            predictButton.textContent = 'Predict';
+          });
+        };
+
+        buttonsDiv.appendChild(predictButton);
+        imagePreview.appendChild(buttonsDiv);
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  // Bonus: link the label with input so clicking label opens file dialog
+  document.querySelector('label[for="upload"]').addEventListener('click', function() {
+    document.getElementById('upload').click();
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Result - Osteo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      font-size: 20px;
+    }
+
+    header, footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background-color: #B7A08B;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .result-container {
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 30px;
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .result-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      color: #154D57;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .user-info {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .user-info div {
+      margin: 8px 0;
+      color: #333;
+    }
+
+    .risk-box {
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: bold;
+      color: white;
+      font-size: 22px;
+      margin: 30px 0;
+    }
+
+    .low-risk {
+      background-color: #4CAF50;
+    }
+
+    .moderate-risk {
+      background-color: #FF9800;
+    }
+
+    .high-risk {
+      background-color: #D32F2F;
+    }
+
+    .note {
+      font-size: 16px;
+      color: #444;
+      line-height: 1.6;
+      margin-top: 20px;
+      text-align: center;
+    }
+    
+  </style>
+</head>
+<body>
+
+  <header>
+    <h2>Osteo-Care</h2>
+  </header>
+
+  <div class="result-container">
+    <div class="result-header">
+      <h1>Knee Osteoarthritis Risk Assessment</h1>
+    </div>
+
+    <div class="user-info">
+      <div><strong>Name:</strong> {{ name }}</div>
+      <div><strong>Gender:</strong> {{ gender }}</div>
+      <div><strong>Age:</strong> {{ age }}</div>
+    </div>
+
+    {% set risk_class = 'low-risk' %}
+    {% if risk_level == 'Moderate Risk' %}
+      {% set risk_class = 'moderate-risk' %}
+    {% elif risk_level == 'High Risk' %}
+      {% set risk_class = 'high-risk' %}
+    {% endif %}
+
+    <div class="risk-box {{ risk_class }}">
+      Risk Level: {{ risk_level }}
+    </div>
+
+    <div class="note">
+      The assessment was based on your answers to the questionnaire.<br>
+      Please consult a healthcare provider for a professional diagnosis and further action.
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Osteo-Care | All rights reserved</p>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Questionnaire - Osteo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      color: #154D57;
+      font-size: 20px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background-color: #B7A08B;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    header img {
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      margin: 0;
+      color: #fff;
+    }
+
+    header nav a {
+      display: inline-block;
+      text-decoration: none;
+      background-color: #154D57;
+      color: white;
+      padding: 10px 20px;
+      margin-left: 15px;
+      border-radius: 20px;
+      font-size: 20px;
+    }
+
+    header nav a:hover {
+      background-color: #136f76;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 70px auto;
+      padding: 20px 40px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .intro-section {
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .intro-text {
+      max-width: 100%;
+    }
+
+    .questionnaire {
+      margin-bottom: 20px;
+    }
+
+    .questionnaire input[type="radio"] {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+      border-radius: 50%;
+      border: 2px solid #154D57;
+      transition: all 0.3s ease;
+    }
+
+    .questionnaire input[type="radio"]:checked {
+      background-color: #154D57;
+      border-color: #136f76;
+    }
+
+    .questionnaire input[type="radio"]:hover {
+      background-color: #136f76;
+      border-color: #136f76;
+      transform: scale(1.2);
+    }
+
+    .questionnaire label {
+      font-size: 19px;
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #154D57;
+    }
+
+    .questionnaire input[type="radio"]:focus {
+      outline: none;
+      box-shadow: 0 0 5px #154D57;
+    }
+
+    .disclaimer {
+      background-color: #e0e0e0;
+      padding: 20px;
+      margin-top: 40px;
+      border-radius: 10px;
+      font-size: 16px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .questionnaire:last-of-type {
+      margin-bottom: 40px;
+    }
+
+    button[type="submit"] {
+      background-color: #154D57;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 19px;
+      margin-top: 20px;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #136f76;
+    }
+
+    .language-switch {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: #154D57;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .risk-level {
+      margin-top: 30px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #D94E41;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="{{ url_for('static', filename='img/team.jpg')}}" alt="Team Logo">
+    <h1>Osteo-Care</h1>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">About</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="intro-section">
+      <div class="intro-text">
+        <h2>Why Use This Questionnaire?</h2>
+        <p>Our website aims to help users detect early signs of knee osteoarthritis using X-ray images. However, in cases where users do not have access to X-rays, this questionnaire provides a simple way to assess the likelihood of osteoarthritis based on your symptoms. If the questionnaire indicates a probability, we recommend consulting a doctor and using our model-based predictions for further insights.</p>
+      </div>
+    </div>
+
+    <h2 id="title">Knee Osteoarthritis Questionnaire</h2>
+
+    <form id="questionnaire-form" method="POST" action="/questionnaire">
+      <div class="questionnaire">
+        <label>Name:</label>
+        <input type="text" name="name" required placeholder="Enter your name">
+      </div>
+
+      <div class="questionnaire">
+        <label>Gender:</label>
+        <select name="gender" required>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <div class="questionnaire">
+        <label>Age:</label>
+        <input type="number" name="age" required placeholder="Enter your age">
+      </div>
+
+      <div class="questionnaire">
+        <label id="q1">Do you experience knee pain?</label>
+        <input type="radio" name="q1" value="yes" required> Yes
+        <input type="radio" name="q1" value="no"> No
+      </div>
+
+      <div class="questionnaire">
+        <label id="q2">Is your knee pain frequent?</label>
+        <input type="radio" name="q2" value="yes" required> Yes
+        <input type="radio" name="q2" value="no"> No
+      </div>
+
+      <div class="questionnaire">
+        <label id="q3">Do you feel stiffness in your knee after resting?</label>
+        <input type="radio" name="q3" value="yes" required> Yes
+        <input type="radio" name="q3" value="no"> No
+      </div>
+
+      <div class="questionnaire">
+        <label id="q4">Is your knee pain affecting your daily activities?</label>
+        <input type="radio" name="q4" value="yes" required> Yes
+        <input type="radio" name="q4" value="no"> No
+      </div>
+
+      <div class="questionnaire">
+        <label id="q5">Do you experience swelling in your knee?</label>
+        <input type="radio" name="q5" value="yes" required> Yes
+        <input type="radio" name="q5" value="no"> No
+      </div>
+
+      <div class="questionnaire">
+        <label id="q6">Have you had any previous knee injuries?</label>
+        <input type="radio" name="q6" value="yes" required> Yes
+        <input type="radio" name="q6" value="no"> No
+      </div>
+
+      <button type="submit">Submit</button>
+    </form>
+
+  </div>
+
+  <div class="disclaimer">
+    <p>Disclaimer: This is an assistive tool for doctors and is not a replacement for medical advice. Patients should consult their doctor before taking any action based on the results.</p>
+  </div>
+
+  <div class="language-switch" onclick="toggleLanguage()">
+    <span id="switch-text">Switch to Hindi</span>
+  </div>
+
+  <script>
+    let isHindi = false;
+
+    function toggleLanguage() {
+      isHindi = !isHindi;
+      const switchText = document.getElementById('switch-text');
+      const title = document.getElementById('title');
+      const questions = document.querySelectorAll('.questionnaire label');
+
+      if (isHindi) {
+        title.innerHTML = 'घुटने के ऑस्टियोआर्थराइटिस प्रश्नावली';
+        switchText.innerHTML = 'Switch to English';
+
+        questions[0].innerHTML = 'क्या आपको घुटने में दर्द होता है?';
+        questions[1].innerHTML = 'क्या आपके घुटने का दर्द बार-बार होता है?';
+        questions[2].innerHTML = 'क्या आपको आराम करने के बाद घुटने में अकड़न महसूस होती है?';
+        questions[3].innerHTML = 'क्या घुटने का दर्द आपके दैनिक कार्यों को प्रभावित करता है?';
+        questions[4].innerHTML = 'क्या आपको घुटने में सूजन महसूस होती है?';
+        questions[5].innerHTML = 'क्या आपकी घुटने में पहले कोई चोट लगी थी?';
+      } else {
+        title.innerHTML = 'Knee Osteoarthritis Questionnaire';
+        switchText.innerHTML = 'Switch to Hindi';
+
+        questions[0].innerHTML = 'Do you experience knee pain?';
+        questions[1].innerHTML = 'Is your knee pain frequent?';
+        questions[2].innerHTML = 'Do you feel stiffness in your knee after resting?';
+        questions[3].innerHTML = 'Is your knee pain affecting your daily activities?';
+        questions[4].innerHTML = 'Do you experience swelling in your knee?';
+        questions[5].innerHTML = 'Have you had any previous knee injuries?';
+      }
+    }
+
+    // // Handle form submission and calculate risk level
+    // document.getElementById('questionnaire-form').addEventListener('submit', function(event) {
+    //   event.preventDefault();
+    //   let riskScore = 0;
+
+    //   // Calculate risk based on responses
+    //   const answers = document.querySelectorAll('input[type="radio"]:checked');
+    //   answers.forEach(answer => {
+    //     if (answer.value === 'yes') {
+    //       riskScore++;
+    //     }
+    //   });
+
+    //   let riskLevel = 'Low Risk';
+
+    //   if (riskScore >= 4) {
+    //     riskLevel = 'High Risk';
+    //   } else if (riskScore >= 2) {
+    //     riskLevel = 'Medium Risk';
+    //   }
+
+    //   // Update the risk level
+    //   document.getElementById('risk-level').innerText = `Risk Level: ${riskLevel}`;
+
+    //   // Generate report
+    //   const report = `
+    //     <h2>Report Summary</h2>
+    //     <p><strong>Name:</strong> ${document.querySelector('input[name="name"]').value}</p>
+    //     <p><strong>Gender:</strong> ${document.querySelector('select[name="gender"]').value}</p>
+    //     <p><strong>Age:</strong> ${document.querySelector('input[name="age"]').value}</p>
+    //     <p><strong>Risk Level:</strong> ${riskLevel}</p>
+    //   `;
+    //   localStorage.setItem('report', report);
+    //   window.location.href = '/result';  // Redirect to the result page
+    // });
+  </script>
+</body>
+</html>
