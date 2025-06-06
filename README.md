@@ -84,4 +84,4 @@ For production environments, store secrets in environment variables instead of h
 
 ## 📬 Contact
 
-For any queries, please contact: saeesurve7@gmail.com
+For any queries, please contact: komalgupta1157@gmail.com
